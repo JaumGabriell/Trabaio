@@ -3,9 +3,18 @@ from openpyxl import load_workbook
 import os
 import time
 import warnings
+from testeEmail import enviar_email
 
 # Suprimir warnings específicos do openpyxl
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
+
+# Configurações do arquivo modelo
+NOME_ARQUIVO_MODELO = "Modelo Planilha Guia operação Mestra"
+EXTENSAO_MODELO = ".xlsx"
+ARQUIVO_MODELO_COMPLETO = f"{NOME_ARQUIVO_MODELO}{EXTENSAO_MODELO}"
+
+# Configuração do prefixo para arquivos gerados (altere aqui para personalizar)
+PREFIXO_ARQUIVOS_GERADOS = "Feito"  # Ou use NOME_ARQUIVO_MODELO para manter o nome original
 
 # Configuração de caminhos - ajuste conforme sua estrutura
 # Exemplo: r"C:\Users\SeuUsuario\Desktop\projeto\arquivos"
@@ -16,14 +25,14 @@ if os.path.exists(pasta_destino):
         caminho_arquivo = os.path.join(pasta_destino, arquivo)
         if os.path.isfile(caminho_arquivo):
             # Manter apenas o arquivo modelo base (sem sufixo adicional)
-            # Remove todas as cópias que têm sufixo após "Modelo Planilha Guia operação Mestra"
-            if arquivo.startswith("Modelo Planilha Guia operação Mestra_") and arquivo.endswith(".xlsx"):
+            # Remove todas as cópias que têm sufixo após o nome do modelo
+            if arquivo.startswith(f"{NOME_ARQUIVO_MODELO}_") and arquivo.endswith(EXTENSAO_MODELO):
                 try:
                     os.remove(caminho_arquivo)
                 except Exception as e:
                     pass
             # Também remove arquivos que não são do modelo
-            elif not arquivo.startswith("Modelo Planilha Guia operação Mestra") or not arquivo.endswith(".xlsx"):
+            elif not arquivo.startswith(NOME_ARQUIVO_MODELO) or not arquivo.endswith(EXTENSAO_MODELO):
                 try:
                     os.remove(caminho_arquivo)
                 except Exception as e:
@@ -126,8 +135,8 @@ if caminhos_completos_destino and caminhos_completos:
         else:
             nome_personalizado = f"arquivo_{i+1}"
         
-        # Criar nome para a cópia usando o nome do arquivo de origem
-        nome_copia = f"{nome_base}_{nome_personalizado}{extensao}"
+        # Criar nome para a cópia usando o prefixo configurado
+        nome_copia = f"{PREFIXO_ARQUIVOS_GERADOS}_{nome_personalizado}{extensao}"
         caminho_copia = os.path.join(diretorio_destino, nome_copia)
         
         # Salvar uma cópia do workbook
@@ -436,5 +445,16 @@ if caminhos_completos and caminhos_copias:
         
         # Salvar a planilha de destino processada
         workbook_destino.save(caminho_copia_destino)
+
+# Após processar todas as planilhas, enviar email com os arquivos gerados
+print("Processamento das planilhas concluído!")
+print("Enviando email com as planilhas processadas...")
+
+try:
+    # Enviar email com todos os arquivos da pasta destino
+    enviar_email(caminho_pasta=caminhoFinal)
+    print("Email enviado com sucesso!")
+except Exception as e:
+    print(f"Erro ao enviar email: {e}")
 
 
