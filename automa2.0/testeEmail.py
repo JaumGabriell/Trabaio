@@ -43,9 +43,9 @@ def enviar_email(anexos=None, caminho_pasta=None):
     # Criar mensagem multipart para suportar anexos
     msg = MIMEMultipart()
     msg['Subject'] = 'Teste de Envio de Email'
-    msg['From'] = 'joao@alphastaffshore.com'
-    msg['To'] = 'joao@alphastaffshore.com'
-    password = 'iyloeniokbnlskkm'
+    msg['From'] = ''
+    msg['To'] = ''
+    password = 'Gerada pelo google apps'
     
     # Adicionar corpo do email
     msg.attach(MIMEText(corpo_email, 'html'))
