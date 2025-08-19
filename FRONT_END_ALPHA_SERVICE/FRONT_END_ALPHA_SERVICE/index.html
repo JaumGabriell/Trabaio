@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telemetria - Alpha Subsea</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">Alpha Subsea ROV</div>
+    <div class="status-indicator">
+      <div class="status-dot"></div>
+      <span>Sistema Online</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="menu-item active" onclick="loadSection('geral', this)">Geral</div>
+      <div class="menu-item" onclick="loadSection('cp', this)">CP</div>
+      <div class="menu-item" onclick="loadSection('cygnus', this)">Cygnus</div>
+      <div class="menu-item" onclick="loadSection('joystick', this)">Joystick</div>
+    </div>
+
+    <div class="content" id="content">
+      <div class="section-title fade-in">Telemetria Geral</div>
+      <div class="telemetry-table-container fade-in">
+        <div class="table-title"></div>
+        <table class="telemetry-table">
+          <thead>
+            <tr>
+              <th>Parâmetro</th>
+              <th>Valor</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="param-name">Roll</td>
+              <td class="param-value" id="roll">0<span class="param-unit">°</span></td>
+              <td class="param-status status-good">Ok</td>
+            </tr>
+            <tr>
+              <td class="param-name">Pitch</td>
+              <td class="param-value" id="pitch">0<span class="param-unit">°</span></td>
+              <td class="param-status status-good">Ok</td>
+            </tr>
+            <tr>
+              <td class="param-name">Yaw</td>
+              <td class="param-value" id="yaw">0<span class="param-unit">°</span></td>
+              <td class="param-status status-good">Ok</td>
+            </tr>
+            <tr>
+              <td class="param-name">Deapth</td>
+              <td class="param-value" id="depth">0<span class="param-unit">m</span></td>
+              <td class="param-status status-good">Ok</td>
+            </tr>            
+            <tr>
+              <td class="param-name">CP CH1</td>
+              <td class="param-value" id="cp_ch1">0<span class="param-unit">V</span></td>
+              <td class="param-status status-good">Ok</td>
+            </tr>
+            <tr>
+              <td class="param-name">CP CH2</td>
+              <td class="param-value" id="cp_ch2">0<span class="param-unit">V</span></td>
+              <td class="param-status status-good">Ok</td>
+            </tr>
+            <tr>
+              <td class="param-name">Cygnus</td>
+              <td class="param-value" id="cygnus">0<span class="param-unit">%</span></td>
+              <td class="param-status status-good">Ok</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 Alpha Subsea | Dashboard v2.2.0 | Telemetria em tempo real
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
